@@ -1,0 +1,29 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "homework",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwlopez91/Bamazon.git"
+  },
+  "keywords": [
+    "amazon",
+    "bamazon",
+    "product"
+  ],
+  "author": "David Lopez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dwlopez91/Bamazon/issues"
+  },
+  "homepage": "https://github.com/dwlopez91/Bamazon#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "inquirer": "^5.1.0",
+    "mysql": "^2.15.0"
+  }
+}
