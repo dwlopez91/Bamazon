@@ -19,32 +19,74 @@ var connection = mysql.createConnection({
   
   connection.connect(function(err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
     readProducts();
   });
   
   function readProducts() {
-    console.log("Selecting all products...\n");
-    connection.query("SELECT * FROM products", function(err, res) {
+    connection.query("SELECT id, product_name, price FROM products", function(err, res) {
       if (err) throw err;
-      // Log all results of the SELECT statement
-      console.log(res);
-      connection.end();
+      for (var i = 0; i < res.length; i++) {
+        console.log("Item ID: " + res[i].id + ", " + "Product: " + res[i].product_name + ", " + "Price: $" + res[i].price);
+      }
+      console.log("-----------------------------------");
+  
+      promptPurchase();
     });
   }
 
-inquirer
+function promptPurchase() {
+  inquirer
     .prompt([
         {
-            name: "product id",
+            name: "product_id",
             message: "What is the ID of the product you'd like to purchase?",
             type: "input",
         },
         {
-            name: "product quantity",
-            message: "How many would you like to purchase?",
+            name: "quantity",
+            message: "How much would you like to purchase?",
             type: "input"
         }
-    ]).then(function(){
-        
-    })
+    ]).then(function(answer) {
+        connection.query('SELECT * FROM products WHERE id = ?', [answer.product_id], function(err, res){
+            //console.log(res[0].stock_quantity);
+            //console.log(answer.quantity);
+             if(answer.quantity > res[0].stock_quantity){
+             console.log('Sorry! Not enough in stock. Try again.');  
+             promptPurchase();
+            }
+            else {
+                console.log("Your total is $" + res[0].price * answer.quantity);
+                connection.query('UPDATE products SET ? Where ?', [{
+                    stock_quantity: res[0].stock_quantity - answer.quantity
+                },{
+                    id: answer.product_id
+                }])
+            }
+        })
+        newPurchase();
+    }); 
+}
+
+function newPurchase (){
+    inquirer
+        .prompt([
+            {
+                name: "new",
+                message: "would you like to make another purchase?",
+                type: "confirm"
+            }
+        ]).then(function(answer){
+            if (answer.new = true) {
+                promptPurchase();
+            }
+            else {
+                console.log("Thank you for visiting! Come again.");
+                connection.end();
+            }
+        })
+}
+
+// the else "thank you for coming! ... doesn't work"
+// the prompt newPurchase for some reason pops up too soon ... 
+// need to add pics to README
