@@ -80,7 +80,7 @@ function newPurchase (){
             if (answer.new === "Yes"||"y"||"yes"||"Y") {
                 promptPurchase();
             }
-            else {
+            else if (answer.new === "No"||"no"||"N"||"n") {
                 console.log("Thank you for visiting! Come again.");
                 connection.end();
             }
@@ -88,6 +88,4 @@ function newPurchase (){
 }
 
 
-// the else "thank you for coming! ... doesn't work"
-// the prompt newPurchase for some reason pops up too soon ... 
-// need to add pics to README
+// the else if "no" is not working
