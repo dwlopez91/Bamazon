@@ -5,8 +5,7 @@ CREATE DATABASE bamazonDB;
 USE bamazonDB; 
 
 CREATE TABLE products(
-    id INT NOT NULL, 
-    /* add AUTO_INCREMENT after NOT NULL in workbench ... won't work here? */
+    id INT NOT NULL AUTO_INCREMENT, 
 
     product_name VARCHAR(45) NOT NULL, 
 
