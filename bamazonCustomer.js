@@ -62,9 +62,9 @@ function promptPurchase() {
                 },{
                     id: answer.product_id
                 }])
+                newPurchase();
             }
-        })
-        newPurchase();
+        });
     }); 
 }
 
@@ -77,7 +77,7 @@ function newPurchase (){
                 type: "confirm"
             }
         ]).then(function(answer){
-            if (answer.new = true) {
+            if (answer.new === "Yes"||"y"||"yes"||"Y") {
                 promptPurchase();
             }
             else {
@@ -86,6 +86,7 @@ function newPurchase (){
             }
         })
 }
+
 
 // the else "thank you for coming! ... doesn't work"
 // the prompt newPurchase for some reason pops up too soon ... 
